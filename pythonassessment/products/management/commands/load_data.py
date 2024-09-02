@@ -5,11 +5,17 @@ from django.core.management.base import BaseCommand
 from products.models import Product
 
 class Command(BaseCommand):
-    help = 'Load and clean data from products.csv into the Product table'
+    help = 'Load and clean data from a CSV file into the Product table'
 
-    def handle(self, *args, **kwargs):
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-        csv_file_path = os.path.join(base_dir, 'products.csv')
+    def add_arguments(self, parser):
+        parser.add_argument('--file', type=str, help='Path to the CSV file')
+
+    def handle(self, *args, **options):
+        csv_file_path = options['file']
+
+        if not os.path.isfile(csv_file_path):
+            self.stdout.write(self.style.ERROR(f'The file {csv_file_path} does not exist'))
+            return
 
         # Load the data into a list to process missing values
         data = []
@@ -54,8 +60,8 @@ class Command(BaseCommand):
         # Calculate medians for price and quantity_sold
         prices = [row['price'] for row in data if row['price'] is not None]
         quantities = [row['quantity_sold'] for row in data if row['quantity_sold'] is not None]
-        price_median = statistics.median(prices)
-        quantity_median = statistics.median(quantities)
+        price_median = statistics.median(prices) if prices else 0
+        quantity_median = statistics.median(quantities) if quantities else 0
 
         # Calculate average ratings per category
         category_ratings = {}
