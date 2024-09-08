@@ -79,12 +79,12 @@ WSGI_APPLICATION = 'pythonassessment.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER':'postgres.sfvbsieicsjzjqohqzul',
-        'PASSWORD':'rMvUuNnXrQKf8t8y',
-        'HOST':'aws-0-ap-southeast-1.pooler.supabase.com',
-        'PORT':'5432',
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': 'postgres',
+        # 'USER':'',
+        # 'PASSWORD':'',
+        # 'HOST':'',
+        # 'PORT':'5432',
         
     }
 }
